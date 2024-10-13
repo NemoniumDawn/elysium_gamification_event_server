@@ -25,7 +25,7 @@ class VideoPopup(QDialog):
     def __init__(self, video_path):
         super().__init__()
         self.setWindowTitle("Video Popup")
-        self.resize(400, 300)  # Use resize instead of setGeometry
+        self.resize(500, 175)  # Use resize instead of setGeometry
 
         self.setWindowFlags(Qt.FramelessWindowHint)
         # self.setAttribute(Qt.WA_TranslucentBackground)
