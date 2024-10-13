@@ -27,12 +27,30 @@ class VideoPopup(QDialog):
         self.setWindowTitle("Video Popup")
         self.resize(400, 300)  # Use resize instead of setGeometry
 
-        layout = QVBoxLayout()
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        # self.setAttribute(Qt.WA_TranslucentBackground)
+        # self.setStyleSheet("background-color: black;")
 
+        # Create a main layout
+        main_layout = QVBoxLayout(self)
+        main_layout.setContentsMargins(0, 0, 0, 0)
+
+        # Create a container widget
+        container = QWidget()
+        container.setAttribute(Qt.WA_TranslucentBackground)
+        container_layout = QVBoxLayout(container)
+        container_layout.setContentsMargins(0, 0, 0, 0)
+
+        # Create and add the video widget to the container
         self.video_widget = QVideoWidget()
-        layout.addWidget(self.video_widget)
+        container_layout.addWidget(self.video_widget)
 
-        self.setLayout(layout)
+        # Add the container to the main layout
+        main_layout.addWidget(container)
+
+        # Set up the media player
+        self.media_player = QMediaPlayer(None, QMediaPlayer.VideoSurface)
+        self.media_player.setVideoOutput(self.video_widget)
 
         self.media_player = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.media_player.setVideoOutput(self.video_widget)
@@ -56,6 +74,10 @@ class VideoPopup(QDialog):
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setStyleSheet("background-color: black;")
+
         self.initUI()
         center_window(self)  # Center the main window
 
@@ -68,12 +90,9 @@ class MainWindow(QWidget):
         video_path = r"C:\Users\aleks\Downloads\elysium_gamification_dev\elysium_gamification_event_server\vid.mp4"
         popup = VideoPopup(video_path)
         popup.exec_()
-        # QTimer.singleShot(2000, self.closeAndQuit)
         self.closeAndQuit()
 
     def closeAndQuit(self):
-        # if self.msg:
-        #     self.msg.close()
         QApplication.instance().quit()
 
 
