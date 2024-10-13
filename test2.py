@@ -62,15 +62,19 @@ class MainWindow(QWidget):
     def initUI(self):
         self.setWindowTitle("Video Popup Example")
         self.resize(300, 200)  # Use resize instead of setGeometry
-
-        button = QPushButton("Show Video Popup", self)
-        button.move(100, 80)
-        button.clicked.connect(self.showVideoPopup)
+        QTimer.singleShot(0, self.showVideoPopup)
 
     def showVideoPopup(self):
         video_path = r"C:\Users\aleks\Downloads\elysium_gamification_dev\elysium_gamification_event_server\vid.mp4"
         popup = VideoPopup(video_path)
         popup.exec_()
+        # QTimer.singleShot(2000, self.closeAndQuit)
+        self.closeAndQuit()
+
+    def closeAndQuit(self):
+        # if self.msg:
+        #     self.msg.close()
+        QApplication.instance().quit()
 
 
 if __name__ == "__main__":
